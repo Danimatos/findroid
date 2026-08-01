@@ -324,7 +324,7 @@ class PlayerActivity : BasePlayerActivity() {
         }
 
         subtitleSettingsButton.setOnClickListener {
-            SubtitleSettingsDialogFragment(viewModel)
+            SubtitleSettingsDialogFragment(viewModel, appPreferences)
                 .show(supportFragmentManager, "subtitlesettingsdialog")
         }
 

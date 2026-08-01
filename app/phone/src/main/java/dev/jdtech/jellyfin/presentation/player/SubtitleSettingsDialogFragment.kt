@@ -1,6 +1,5 @@
 package dev.jdtech.jellyfin.presentation.player
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,39 +7,21 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.SeekBar
 import android.widget.TextView
-import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.DialogFragment
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputEditText
-import dagger.hilt.android.AndroidEntryPoint
 import dev.jdtech.jellyfin.R
-import dev.jdtech.jellyfin.player.local.mpv.MPVPlayer
 import dev.jdtech.jellyfin.player.local.presentation.PlayerViewModel
 import dev.jdtech.jellyfin.settings.domain.AppPreferences
-import javax.inject.Inject
 
-/**
- * Bottom sheet dialog for customizing ASS/SSA subtitle appearance in real time.
- *
- * Changes are applied immediately to [MPVPlayer] via [MPVPlayer.applySubtitleSettings]
- * and also persisted in [AppPreferences] so they survive across sessions.
- *
- * The [overrideMode] controls whether mpv respects the ASS file's embedded styles:
- *   "no"    = fully respect file styles (default, safe for all content)
- *   "scale" = only apply scale override, keep other ASS styles
- *   "yes"   = apply user overrides on top of file styles
- *   "force" = aggressively ignore all embedded styles
- */
-@AndroidEntryPoint
 class SubtitleSettingsDialogFragment(
     private val viewModel: PlayerViewModel,
+    private val appPreferences: AppPreferences,
 ) : BottomSheetDialogFragment() {
-
-    @Inject lateinit var appPreferences: AppPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +34,7 @@ class SubtitleSettingsDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // ── Override Mode dropdown ─────────────────────────────────────────
+        // Override Mode dropdown
         val overrideModeOptions = listOf("no", "scale", "yes", "force")
         val overrideModeLabels = listOf(
             getString(R.string.subtitle_override_no),
@@ -76,7 +57,7 @@ class SubtitleSettingsDialogFragment(
                 ?: overrideModeLabels[0]
         overrideModeDropdown.setText(currentOverrideLabel, false)
 
-        // ── Scale slider (50% – 200%) ──────────────────────────────────────
+        // Scale slider (50% - 200%)
         val scaleSlider = view.findViewById<Slider>(R.id.slider_scale)
         val scaleLabel = view.findViewById<TextView>(R.id.label_scale_value)
         val currentScale = appPreferences.getValue(appPreferences.playerMpvSubScale)
@@ -86,20 +67,20 @@ class SubtitleSettingsDialogFragment(
             scaleLabel.text = "${value.toInt()}%"
         }
 
-        // ── Font Size input ────────────────────────────────────────────────
+        // Font Size input
         val fontSizeInput = view.findViewById<TextInputEditText>(R.id.input_font_size)
         val currentFontSize = appPreferences.getValue(appPreferences.playerMpvSubFontSize)
         if (currentFontSize > 0) fontSizeInput.setText(currentFontSize.toString())
 
-        // ── Font name input ────────────────────────────────────────────────
+        // Font name input
         val fontInput = view.findViewById<TextInputEditText>(R.id.input_font)
         fontInput.setText(appPreferences.getValue(appPreferences.playerMpvSubFont))
 
-        // ── Text color input ───────────────────────────────────────────────
+        // Text color input
         val colorInput = view.findViewById<TextInputEditText>(R.id.input_color)
         colorInput.setText(appPreferences.getValue(appPreferences.playerMpvSubColor))
 
-        // ── Border size slider (0 – 10) ────────────────────────────────────
+        // Border size slider (0 - 10)
         val borderSlider = view.findViewById<Slider>(R.id.slider_border_size)
         val borderLabel = view.findViewById<TextView>(R.id.label_border_value)
         val currentBorder = appPreferences.getValue(appPreferences.playerMpvSubBorderSize)
@@ -109,11 +90,11 @@ class SubtitleSettingsDialogFragment(
             borderLabel.text = value.toInt().toString()
         }
 
-        // ── Border color input ─────────────────────────────────────────────
+        // Border color input
         val borderColorInput = view.findViewById<TextInputEditText>(R.id.input_border_color)
         borderColorInput.setText(appPreferences.getValue(appPreferences.playerMpvSubBorderColor))
 
-        // ── Shadow offset slider (0 – 10) ──────────────────────────────────
+        // Shadow offset slider (0 - 10)
         val shadowSlider = view.findViewById<Slider>(R.id.slider_shadow_offset)
         val shadowLabel = view.findViewById<TextView>(R.id.label_shadow_value)
         val currentShadow = appPreferences.getValue(appPreferences.playerMpvSubShadowOffset)
@@ -123,7 +104,7 @@ class SubtitleSettingsDialogFragment(
             shadowLabel.text = value.toInt().toString()
         }
 
-        // ── Margin Y slider (0 – 200px) ────────────────────────────────────
+        // Margin Y slider (0 - 200px)
         val marginSlider = view.findViewById<Slider>(R.id.slider_margin_y)
         val marginLabel = view.findViewById<TextView>(R.id.label_margin_value)
         val currentMargin = appPreferences.getValue(appPreferences.playerMpvSubMarginY)
@@ -133,7 +114,7 @@ class SubtitleSettingsDialogFragment(
             marginLabel.text = "${value.toInt()}px"
         }
 
-        // ── Reset button ───────────────────────────────────────────────────
+        // Reset button
         view.findViewById<Button>(R.id.btn_subtitle_reset).setOnClickListener {
             scaleSlider.value = 100f
             fontSizeInput.setText("")
@@ -146,7 +127,7 @@ class SubtitleSettingsDialogFragment(
             overrideModeDropdown.setText(overrideModeLabels[0], false)
         }
 
-        // ── Apply / Close buttons ──────────────────────────────────────────
+        // Apply / Close buttons
         view.findViewById<Button>(R.id.btn_subtitle_apply).setOnClickListener {
             applyAndSave(
                 overrideModeOptions = overrideModeOptions,
@@ -205,20 +186,20 @@ class SubtitleSettingsDialogFragment(
         appPreferences.setValue(appPreferences.playerMpvSubShadowOffset, shadowOffset)
         appPreferences.setValue(appPreferences.playerMpvSubMarginY, marginY)
 
-        // Apply immediately to the running MPV instance
-        val mpvPlayer = viewModel.player as? MPVPlayer
-        mpvPlayer?.applySubtitleSettings(
-            overrideMode = overrideMode,
-            font = font,
-            fontSize = fontSize,
-            color = color,
-            borderSize = borderSize,
-            borderColor = borderColor,
-            shadowOffset = shadowOffset,
-            marginY = marginY,
-            scale = scale,
-        )
+        // Apply immediately to the running MPV instance via ViewModel
+        viewModel.applySubtitleSettingsFromPreferences(appPreferences)
 
         dismiss()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.window?.let {
+            WindowCompat.getInsetsController(it, it.decorView).apply {
+                systemBarsBehavior =
+                    WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                hide(WindowInsetsCompat.Type.systemBars())
+            }
+        }
     }
 }
