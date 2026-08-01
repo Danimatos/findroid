@@ -230,15 +230,126 @@ class SettingsViewModel @Inject constructor(private val appPreferences: AppPrefe
                                                     onClick = {
                                                         viewModelScope.launch {
                                                             eventsChannel.send(
-                                                                SettingsEvent.LaunchIntent(
-                                                                    Intent(
-                                                                        Settings
-                                                                            .ACTION_CAPTIONING_SETTINGS
+                                                                SettingsEvent.NavigateToSettings(
+                                                                    intArrayOf(
+                                                                        R.string.settings_category_player,
+                                                                        it.nameStringResource
                                                                     )
                                                                 )
                                                             )
                                                         }
                                                     },
+                                                    nestedPreferenceGroups =
+                                                        listOf(
+                                                            PreferenceGroup(
+                                                                nameStringResource =
+                                                                    R.string.subtitle_system_category,
+                                                                preferences =
+                                                                    listOf(
+                                                                        PreferenceCategory(
+                                                                            nameStringResource =
+                                                                                R.string.subtitle_system_settings,
+                                                                            descriptionStringRes =
+                                                                                R.string.subtitle_system_settings_summary,
+                                                                            onClick = {
+                                                                                viewModelScope.launch {
+                                                                                    eventsChannel.send(
+                                                                                        SettingsEvent.LaunchIntent(
+                                                                                            Intent(
+                                                                                                Settings
+                                                                                                    .ACTION_CAPTIONING_SETTINGS
+                                                                                            )
+                                                                                        )
+                                                                                    )
+                                                                                }
+                                                                            },
+                                                                        )
+                                                                    )
+                                                            ),
+                                                            PreferenceGroup(
+                                                                nameStringResource =
+                                                                    R.string.subtitle_ass_category,
+                                                                preferences =
+                                                                    listOf(
+                                                                        PreferenceSelect(
+                                                                            nameStringResource =
+                                                                                R.string.subtitle_override_mode,
+                                                                            backendPreference =
+                                                                                appPreferences.playerMpvSubAssOverride,
+                                                                            options =
+                                                                                R.array.sub_ass_override_titles,
+                                                                            optionValues =
+                                                                                R.array.sub_ass_override_values,
+                                                                        ),
+                                                                        PreferenceIntInput(
+                                                                            nameStringResource =
+                                                                                R.string.subtitle_scale,
+                                                                            descriptionStringRes =
+                                                                                R.string.subtitle_scale_summary,
+                                                                            backendPreference =
+                                                                                appPreferences.playerMpvSubScale,
+                                                                            suffixRes =
+                                                                                R.string.subtitle_scale_suffix,
+                                                                        ),
+                                                                        PreferenceSelect(
+                                                                            nameStringResource =
+                                                                                R.string.subtitle_color,
+                                                                            descriptionStringRes =
+                                                                                R.string.subtitle_color_summary,
+                                                                            backendPreference =
+                                                                                appPreferences.playerMpvSubColor,
+                                                                            options =
+                                                                                R.array.sub_color_titles,
+                                                                            optionValues =
+                                                                                R.array.sub_color_values,
+                                                                        ),
+                                                                        PreferenceIntInput(
+                                                                            nameStringResource =
+                                                                                R.string.subtitle_font_size,
+                                                                            descriptionStringRes =
+                                                                                R.string.subtitle_font_size_summary,
+                                                                            backendPreference =
+                                                                                appPreferences.playerMpvSubFontSize,
+                                                                        ),
+                                                                        PreferenceSelect(
+                                                                            nameStringResource =
+                                                                                R.string.subtitle_border_color,
+                                                                            descriptionStringRes =
+                                                                                R.string.subtitle_border_color_summary,
+                                                                            backendPreference =
+                                                                                appPreferences.playerMpvSubBorderColor,
+                                                                            options =
+                                                                                R.array.sub_border_color_titles,
+                                                                            optionValues =
+                                                                                R.array.sub_border_color_values,
+                                                                        ),
+                                                                        PreferenceIntInput(
+                                                                            nameStringResource =
+                                                                                R.string.subtitle_border_size,
+                                                                            descriptionStringRes =
+                                                                                R.string.subtitle_border_size_summary,
+                                                                            backendPreference =
+                                                                                appPreferences.playerMpvSubBorderSize,
+                                                                        ),
+                                                                        PreferenceIntInput(
+                                                                            nameStringResource =
+                                                                                R.string.subtitle_shadow_offset,
+                                                                            descriptionStringRes =
+                                                                                R.string.subtitle_shadow_offset_summary,
+                                                                            backendPreference =
+                                                                                appPreferences.playerMpvSubShadowOffset,
+                                                                        ),
+                                                                        PreferenceIntInput(
+                                                                            nameStringResource =
+                                                                                R.string.subtitle_margin_y,
+                                                                            descriptionStringRes =
+                                                                                R.string.subtitle_margin_y_summary,
+                                                                            backendPreference =
+                                                                                appPreferences.playerMpvSubMarginY,
+                                                                        ),
+                                                                    )
+                                                            )
+                                                        )
                                                 )
                                             )
                                     ),

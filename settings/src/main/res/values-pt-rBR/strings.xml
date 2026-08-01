@@ -106,4 +106,37 @@
     <string name="advanced">Avançado</string>
     <string name="discard_changes_dialog_title">Descartar alterações?</string>
     <string name="discard_changes_dialog_text">Você tem alterações não salvas.</string>
+
+    <!-- Subtitle Customization -->
+    <string name="subtitle_system_category">Legendas Externas / Sistema (ExoPlayer)</string>
+    <string name="subtitle_system_settings">Estilos do Android (Captioning)</string>
+    <string name="subtitle_system_settings_summary">Configurar fonte, tamanho e fundo padrão do Android para legendas normais</string>
+    <string name="subtitle_ass_category">Customização de Legendas ASS / SSA (mpv)</string>
+    <string name="subtitle_override_mode">Modo de substituição de estilo</string>
+    <string name="subtitle_override_no">Sem substituição – respeitar estilos originais do arquivo</string>
+    <string name="subtitle_override_scale">Apenas escala – alterar tamanho da legenda, preservar cores originais</string>
+    <string name="subtitle_override_yes">Sobrescrever – aplicar cores e tamanhos customizados</string>
+    <string name="subtitle_override_force">Forçar substituição – ignorar agressivamente todos os estilos do arquivo</string>
+    <string name="subtitle_scale">Escala da legenda (%)</string>
+    <string name="subtitle_scale_summary">Porcentagem de tamanho da legenda ASS (100 = 1.0x padrão)</string>
+    <string name="subtitle_scale_suffix">%</string>
+    <string name="subtitle_color">Cor do texto</string>
+    <string name="subtitle_color_summary">Cor principal ao sobrescrever estilos</string>
+    <string name="color_default">Padrão (Cor original do arquivo)</string>
+    <string name="color_white">Branco (#FFFFFFFF)</string>
+    <string name="color_yellow">Amarelo (#FFFFFF00)</string>
+    <string name="color_cyan">Ciano (#FF00FFFF)</string>
+    <string name="color_green">Verde (#FF00FF00)</string>
+    <string name="color_black">Preto (#FF000000)</string>
+    <string name="color_dark_gray">Cinza Escuro (#FF333333)</string>
+    <string name="subtitle_font_size">Tamanho da fonte (pt)</string>
+    <string name="subtitle_font_size_summary">Tamanho em pt (0 = usar padrão do arquivo/mpv)</string>
+    <string name="subtitle_border_color">Cor da borda</string>
+    <string name="subtitle_border_color_summary">Cor de contorno ao sobrescrever estilos</string>
+    <string name="subtitle_border_size">Espessura da borda</string>
+    <string name="subtitle_border_size_summary">Espessura do contorno em pixels (-1 = usar padrão do arquivo)</string>
+    <string name="subtitle_shadow_offset">Profundidade da sombra</string>
+    <string name="subtitle_shadow_offset_summary">Profundidade da sombra em pixels (-1 = usar padrão do arquivo)</string>
+    <string name="subtitle_margin_y">Margem vertical (Y)</string>
+    <string name="subtitle_margin_y_summary">Distância inferior da tela em pixels (-1 = usar padrão do mpv)</string>
 </resources>

@@ -52,4 +52,42 @@
         <item>COMMERCIAL</item>
         <item>UNKNOWN</item>
     </string-array>
+    <string-array name="sub_ass_override_titles">
+        <item>@string/subtitle_override_no</item>
+        <item>@string/subtitle_override_scale</item>
+        <item>@string/subtitle_override_yes</item>
+        <item>@string/subtitle_override_force</item>
+    </string-array>
+    <string-array name="sub_ass_override_values">
+        <item>no</item>
+        <item>scale</item>
+        <item>yes</item>
+        <item>force</item>
+    </string-array>
+    <string-array name="sub_color_titles">
+        <item>@string/color_default</item>
+        <item>@string/color_white</item>
+        <item>@string/color_yellow</item>
+        <item>@string/color_cyan</item>
+        <item>@string/color_green</item>
+    </string-array>
+    <string-array name="sub_color_values">
+        <item></item>
+        <item>#FFFFFFFF</item>
+        <item>#FFFFFF00</item>
+        <item>#FF00FFFF</item>
+        <item>#FF00FF00</item>
+    </string-array>
+    <string-array name="sub_border_color_titles">
+        <item>@string/color_default</item>
+        <item>@string/color_black</item>
+        <item>@string/color_dark_gray</item>
+        <item>@string/color_white</item>
+    </string-array>
+    <string-array name="sub_border_color_values">
+        <item></item>
+        <item>#FF000000</item>
+        <item>#FF333333</item>
+        <item>#FFFFFFFF</item>
+    </string-array>
 </resources>

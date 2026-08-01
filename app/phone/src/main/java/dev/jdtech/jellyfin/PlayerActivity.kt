@@ -38,7 +38,6 @@ import dev.jdtech.jellyfin.databinding.ActivityPlayerBinding
 import dev.jdtech.jellyfin.player.local.presentation.PlayerEvents
 import dev.jdtech.jellyfin.player.local.presentation.PlayerViewModel
 import dev.jdtech.jellyfin.presentation.player.SpeedSelectionDialogFragment
-import dev.jdtech.jellyfin.presentation.player.SubtitleSettingsDialogFragment
 import dev.jdtech.jellyfin.presentation.player.TrackSelectionDialogFragment
 import dev.jdtech.jellyfin.settings.domain.AppPreferences
 import dev.jdtech.jellyfin.utils.PlayerGestureHelper
@@ -139,16 +138,8 @@ class PlayerActivity : BasePlayerActivity() {
         val pipButton = binding.playerView.findViewById<ImageButton>(R.id.btn_pip)
         val lockButton = binding.playerView.findViewById<ImageButton>(R.id.btn_lockview)
         val unlockButton = binding.playerView.findViewById<ImageButton>(R.id.btn_unlock)
-        val subtitleSettingsButton =
-            binding.playerView.findViewById<ImageButton>(R.id.btn_subtitle_settings)
 
-        // Show the subtitle settings button only when using mpv backend (only mpv supports ASS customization)
         val isMpvBackend = appPreferences.getValue(appPreferences.playerBackend) == "mpv"
-        if (isMpvBackend) {
-            subtitleSettingsButton.visibility = View.VISIBLE
-            subtitleSettingsButton.isEnabled = false
-            subtitleSettingsButton.imageAlpha = 75
-        }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -221,8 +212,6 @@ class PlayerActivity : BasePlayerActivity() {
                                 pipButton.isEnabled = true
                                 pipButton.imageAlpha = 255
                                 if (isMpvBackend) {
-                                    subtitleSettingsButton.isEnabled = true
-                                    subtitleSettingsButton.imageAlpha = 255
                                     // Apply saved ASS settings once the file is loaded
                                     viewModel.applySubtitleSettingsFromPreferences(appPreferences)
                                 }
@@ -321,11 +310,6 @@ class PlayerActivity : BasePlayerActivity() {
         subtitleButton.setOnClickListener {
             TrackSelectionDialogFragment(C.TRACK_TYPE_TEXT, viewModel)
                 .show(supportFragmentManager, "trackselectiondialog")
-        }
-
-        subtitleSettingsButton.setOnClickListener {
-            SubtitleSettingsDialogFragment(viewModel, appPreferences)
-                .show(supportFragmentManager, "subtitlesettingsdialog")
         }
 
         speedButton.setOnClickListener {

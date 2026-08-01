@@ -106,4 +106,37 @@
     <string name="advanced">Advanced</string>
     <string name="discard_changes_dialog_title">Discard changes?</string>
     <string name="discard_changes_dialog_text">You have unsaved changes.</string>
+
+    <!-- Subtitle Customization -->
+    <string name="subtitle_system_category">External &amp; System Subtitles (ExoPlayer)</string>
+    <string name="subtitle_system_settings">System captioning styles</string>
+    <string name="subtitle_system_settings_summary">Configure standard Android subtitle font, size and background</string>
+    <string name="subtitle_ass_category">ASS / SSA Customization (mpv)</string>
+    <string name="subtitle_override_mode">Style override mode</string>
+    <string name="subtitle_override_no">No override – respect embedded styles</string>
+    <string name="subtitle_override_scale">Scale only – change size, keep embedded colors</string>
+    <string name="subtitle_override_yes">Override – apply customized colors and sizes</string>
+    <string name="subtitle_override_force">Force – aggressively override all embedded styles</string>
+    <string name="subtitle_scale">Subtitle scaling (%)</string>
+    <string name="subtitle_scale_summary">Scale percentage of embedded subtitles (100 = 1.0x)</string>
+    <string name="subtitle_scale_suffix">%</string>
+    <string name="subtitle_color">Text color</string>
+    <string name="subtitle_color_summary">Primary color for override styles</string>
+    <string name="color_default">Default (Respect file)</string>
+    <string name="color_white">White (#FFFFFFFF)</string>
+    <string name="color_yellow">Yellow (#FFFFFF00)</string>
+    <string name="color_cyan">Cyan (#FF00FFFF)</string>
+    <string name="color_green">Green (#FF00FF00)</string>
+    <string name="color_black">Black (#FF000000)</string>
+    <string name="color_dark_gray">Dark Gray (#FF333333)</string>
+    <string name="subtitle_font_size">Font size (pt)</string>
+    <string name="subtitle_font_size_summary">Size in pt (0 = use mpv/file default)</string>
+    <string name="subtitle_border_color">Border color</string>
+    <string name="subtitle_border_color_summary">Outline color for override styles</string>
+    <string name="subtitle_border_size">Border thickness</string>
+    <string name="subtitle_border_size_summary">Outline thickness in pixels (-1 = file default)</string>
+    <string name="subtitle_shadow_offset">Shadow offset</string>
+    <string name="subtitle_shadow_offset_summary">Drop shadow depth in pixels (-1 = file default)</string>
+    <string name="subtitle_margin_y">Vertical margin</string>
+    <string name="subtitle_margin_y_summary">Distance from screen bottom in pixels (-1 = default)</string>
 </resources>

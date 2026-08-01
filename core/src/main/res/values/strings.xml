@@ -109,28 +109,5 @@
     <string name="download_paused">Paused</string>
     <string name="download_downloading">Downloading…</string>
     <string name="download_failed">Failed to download</string>
-
-    <!-- ASS Subtitle Settings -->
-    <string name="subtitle_settings">Subtitle settings</string>
-    <string name="subtitle_override_mode">Style override mode</string>
-    <string name="subtitle_override_no">No override – respect file styles</string>
-    <string name="subtitle_override_scale">Scale only – apply size, keep ASS styles</string>
-    <string name="subtitle_override_yes">Override – apply user style on top of file</string>
-    <string name="subtitle_override_force">Force – ignore all embedded styles</string>
-    <string name="subtitle_scale">Scale</string>
-    <string name="subtitle_font">Font family</string>
-    <string name="subtitle_font_placeholder">e.g. Roboto</string>
-    <string name="subtitle_font_hint">Leave empty to use font from the subtitle file</string>
-    <string name="subtitle_font_size">Font size</string>
-    <string name="subtitle_font_size_placeholder">e.g. 48</string>
-    <string name="subtitle_font_size_hint">Leave empty to use mpv default</string>
-    <string name="subtitle_color">Text color (#AARRGGBB)</string>
-    <string name="subtitle_color_hint">e.g. #FFFFFFFF = opaque white. Leave empty to use file color.</string>
-    <string name="subtitle_border_size">Border / outline size</string>
-    <string name="subtitle_border_color">Border color (#AARRGGBB)</string>
-    <string name="subtitle_shadow_offset">Shadow depth</string>
-    <string name="subtitle_margin_y">Bottom margin</string>
-    <string name="subtitle_reset">Reset</string>
-    <string name="apply">Apply</string>
 </resources>
 
