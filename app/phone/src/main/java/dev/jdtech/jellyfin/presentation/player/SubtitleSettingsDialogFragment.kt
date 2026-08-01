@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputEditText
 import dev.jdtech.jellyfin.R
+import dev.jdtech.jellyfin.core.R as CoreR
 import dev.jdtech.jellyfin.player.local.presentation.PlayerViewModel
 import dev.jdtech.jellyfin.settings.domain.AppPreferences
 
@@ -37,10 +38,10 @@ class SubtitleSettingsDialogFragment(
         // Override Mode dropdown
         val overrideModeOptions = listOf("no", "scale", "yes", "force")
         val overrideModeLabels = listOf(
-            getString(R.string.subtitle_override_no),
-            getString(R.string.subtitle_override_scale),
-            getString(R.string.subtitle_override_yes),
-            getString(R.string.subtitle_override_force),
+            getString(CoreR.string.subtitle_override_no),
+            getString(CoreR.string.subtitle_override_scale),
+            getString(CoreR.string.subtitle_override_yes),
+            getString(CoreR.string.subtitle_override_force),
         )
         val overrideModeAdapter = ArrayAdapter(
             requireContext(),
