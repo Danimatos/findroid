@@ -172,6 +172,26 @@ constructor(
         }
     }
 
+    /**
+     * Reads all saved ASS subtitle preferences and applies them to the MPV player.
+     * This is a no-op when the active player is ExoPlayer.
+     * Called from PlayerActivity on file load and whenever the user saves new settings.
+     */
+    fun applySubtitleSettingsFromPreferences(prefs: AppPreferences) {
+        val mpvPlayer = player as? MPVPlayer ?: return
+        mpvPlayer.applySubtitleSettings(
+            overrideMode = prefs.getValue(prefs.playerMpvSubAssOverride),
+            font = prefs.getValue(prefs.playerMpvSubFont),
+            fontSize = prefs.getValue(prefs.playerMpvSubFontSize),
+            color = prefs.getValue(prefs.playerMpvSubColor),
+            borderSize = prefs.getValue(prefs.playerMpvSubBorderSize),
+            borderColor = prefs.getValue(prefs.playerMpvSubBorderColor),
+            shadowOffset = prefs.getValue(prefs.playerMpvSubShadowOffset),
+            marginY = prefs.getValue(prefs.playerMpvSubMarginY),
+            scale = prefs.getValue(prefs.playerMpvSubScale),
+        )
+    }
+
     fun initializePlayer(itemId: UUID, itemKind: String, startFromBeginning: Boolean) {
         player.addListener(this)
 

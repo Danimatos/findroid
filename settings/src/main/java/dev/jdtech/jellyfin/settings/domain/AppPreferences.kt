@@ -32,6 +32,26 @@ class AppPreferences @Inject constructor(val sharedPreferences: SharedPreference
     val playerMpvVo = Preference("pref_player_mpv_vo", "gpu-next")
     val playerMpvAo = Preference("pref_player_mpv_ao", "aaudio")
 
+    // Player - mpv - ASS subtitle customization
+    // sub-ass-override: "no" | "scale" | "yes" | "force"
+    val playerMpvSubAssOverride = Preference("pref_player_mpv_sub_ass_override", "no")
+    // sub-font: empty string means respect the ASS file's font
+    val playerMpvSubFont = Preference("pref_player_mpv_sub_font", "")
+    // sub-font-size: 0 means use mpv/ASS default
+    val playerMpvSubFontSize = Preference("pref_player_mpv_sub_font_size", 0)
+    // sub-color: ARGB hex string, e.g. "#FFFFFFFF". Empty = respect file
+    val playerMpvSubColor = Preference("pref_player_mpv_sub_color", "")
+    // sub-border-size: -1 means respect file
+    val playerMpvSubBorderSize = Preference("pref_player_mpv_sub_border_size", -1)
+    // sub-border-color: ARGB hex string. Empty = respect file
+    val playerMpvSubBorderColor = Preference("pref_player_mpv_sub_border_color", "")
+    // sub-shadow-offset: -1 means respect file
+    val playerMpvSubShadowOffset = Preference("pref_player_mpv_sub_shadow_offset", -1)
+    // sub-margin-y: -1 means use mpv default (36)
+    val playerMpvSubMarginY = Preference("pref_player_mpv_sub_margin_y", -1)
+    // sub-scale: 1.0 = default, stored as Float * 100 as Int for SharedPreferences compat
+    val playerMpvSubScale = Preference("pref_player_mpv_sub_scale", 100)
+
     // Player - gestures
     val playerGestures = Preference("pref_player_gestures", true)
     val playerGesturesVB = Preference("pref_player_gestures_vb", true)

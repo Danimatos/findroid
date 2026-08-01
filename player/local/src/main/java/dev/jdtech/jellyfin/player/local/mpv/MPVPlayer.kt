@@ -284,6 +284,83 @@ class MPVPlayer(
         }
     }
 
+    /**
+     * Apply ASS/SSA subtitle customization settings to the mpv instance at runtime.
+     *
+     * The [overrideMode] parameter maps to mpv's `sub-ass-override` property:
+     * - "no"    = fully respect the embedded ASS styles (default)
+     * - "scale" = only apply sub-scale, keep other ASS styles
+     * - "yes"   = apply sub-font/color/etc. as overrides on top of ASS styles
+     * - "force" = aggressively ignore all embedded styles
+     *
+     * All other parameters are optional (null / -1 / empty = respect file / mpv default).
+     *
+     * @param overrideMode  "no" | "scale" | "yes" | "force"
+     * @param font          Font family name, or empty string to respect file
+     * @param fontSize      Font size in points (>0), or 0 for mpv default
+     * @param color         Primary text color as "#AARRGGBB" hex, or empty string
+     * @param borderSize    Outline thickness (>=0), or -1 to respect file
+     * @param borderColor   Outline color as "#AARRGGBB" hex, or empty string
+     * @param shadowOffset  Drop shadow depth (>=0), or -1 to respect file
+     * @param marginY       Vertical margin in pixels (>=0), or -1 for mpv default
+     * @param scale         Scale factor as percentage integer (100 = 1.0x)
+     */
+    fun applySubtitleSettings(
+        overrideMode: String = "no",
+        font: String = "",
+        fontSize: Int = 0,
+        color: String = "",
+        borderSize: Int = -1,
+        borderColor: String = "",
+        shadowOffset: Int = -1,
+        marginY: Int = -1,
+        scale: Int = 100,
+    ) {
+        // Override mode — always apply regardless of other settings
+        mpvLib.setOptionString("sub-ass-override", overrideMode)
+        Timber.d("[ASS] sub-ass-override=$overrideMode")
+
+        // Scale is always applied (safe even in "no" mode)
+        val scaleFactor = scale.coerceAtLeast(10) / 100f
+        mpvLib.setOptionString("sub-scale", scaleFactor.toString())
+        Timber.d("[ASS] sub-scale=$scaleFactor")
+
+        if (font.isNotBlank()) {
+            mpvLib.setOptionString("sub-font", font)
+            Timber.d("[ASS] sub-font=$font")
+        }
+
+        if (fontSize > 0) {
+            mpvLib.setOptionString("sub-font-size", fontSize.toString())
+            Timber.d("[ASS] sub-font-size=$fontSize")
+        }
+
+        if (color.isNotBlank()) {
+            mpvLib.setOptionString("sub-color", color)
+            Timber.d("[ASS] sub-color=$color")
+        }
+
+        if (borderSize >= 0) {
+            mpvLib.setOptionString("sub-border-size", borderSize.toString())
+            Timber.d("[ASS] sub-border-size=$borderSize")
+        }
+
+        if (borderColor.isNotBlank()) {
+            mpvLib.setOptionString("sub-border-color", borderColor)
+            Timber.d("[ASS] sub-border-color=$borderColor")
+        }
+
+        if (shadowOffset >= 0) {
+            mpvLib.setOptionString("sub-shadow-offset", shadowOffset.toString())
+            Timber.d("[ASS] sub-shadow-offset=$shadowOffset")
+        }
+
+        if (marginY >= 0) {
+            mpvLib.setOptionString("sub-margin-y", marginY.toString())
+            Timber.d("[ASS] sub-margin-y=$marginY")
+        }
+    }
+
     // Listeners and notification.
     private val listeners: ListenerSet<Player.Listener> =
         ListenerSet(context.mainLooper, Clock.DEFAULT) { listener: Player.Listener, flags: FlagSet
