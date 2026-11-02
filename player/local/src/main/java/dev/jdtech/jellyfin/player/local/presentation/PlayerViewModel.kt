@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MimeTypes
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.TrackSelectionOverride
@@ -258,6 +259,11 @@ constructor(
             MediaItem.Builder()
                 .setMediaId(itemId.toString())
                 .setUri(streamUrl)
+                .apply {
+                    if (streamUrl.contains(".m3u8", ignoreCase = true)) {
+                        setMimeType(MimeTypes.APPLICATION_M3U8)
+                    }
+                }
                 .setMediaMetadata(MediaMetadata.Builder().setTitle(name).build())
                 .setSubtitleConfigurations(mediaSubtitles)
                 .build()
