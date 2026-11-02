@@ -33,6 +33,10 @@ fun VideoPlayerSeeker(
     onSeek: (Float) -> Unit,
     contentProgress: Duration,
     contentDuration: Duration,
+    hasNext: Boolean = false,
+    hasPrevious: Boolean = false,
+    onNext: () -> Unit = {},
+    onPrevious: () -> Unit = {},
 ) {
     val contentProgressString =
         contentProgress.toComponents { h, m, s, _ ->
@@ -52,6 +56,17 @@ fun VideoPlayerSeeker(
         }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
+        if (hasPrevious) {
+            IconButton(
+                onClick = onPrevious,
+            ) {
+                Icon(
+                    painter = painterResource(id = CoreR.drawable.ic_skip_back),
+                    contentDescription = null,
+                )
+            }
+            Spacer(modifier = Modifier.width(MaterialTheme.spacings.small))
+        }
         IconButton(
             onClick = { onPlayPauseToggle(!isPlaying) },
             modifier = Modifier.focusRequester(focusRequester),
@@ -68,8 +83,19 @@ fun VideoPlayerSeeker(
                 )
             }
         }
+        if (hasNext) {
+            Spacer(modifier = Modifier.width(MaterialTheme.spacings.small))
+            IconButton(
+                onClick = onNext,
+            ) {
+                Icon(
+                    painter = painterResource(id = CoreR.drawable.ic_skip_forward),
+                    contentDescription = null,
+                )
+            }
+        }
         Spacer(modifier = Modifier.width(MaterialTheme.spacings.medium))
-        Column {
+        Column(modifier = Modifier.weight(1f)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,

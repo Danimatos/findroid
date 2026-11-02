@@ -112,11 +112,15 @@ fun PlayerScreen(
 
     var currentPosition by remember { mutableLongStateOf(0L) }
     var isPlaying by remember { mutableStateOf(viewModel.player.isPlaying) }
+    var hasNext by remember { mutableStateOf(viewModel.player.hasNextMediaItem()) }
+    var hasPrevious by remember { mutableStateOf(viewModel.player.hasPreviousMediaItem()) }
     LaunchedEffect(Unit) {
         while (true) {
             delay(300)
             currentPosition = viewModel.player.currentPosition
             isPlaying = viewModel.player.isPlaying
+            hasNext = viewModel.player.hasNextMediaItem()
+            hasPrevious = viewModel.player.hasPreviousMediaItem()
         }
     }
 
@@ -217,6 +221,16 @@ fun PlayerScreen(
                     player = viewModel.player,
                     state = videoPlayerState,
                     focusRequester = focusRequester,
+                    hasNext = hasNext,
+                    hasPrevious = hasPrevious,
+                    onNext = {
+                        viewModel.nextEpisode()
+                        focusRequester.requestFocus()
+                    },
+                    onPrevious = {
+                        viewModel.previousEpisode()
+                        focusRequester.requestFocus()
+                    },
                     // navigator = navigator,
                 )
             },
@@ -233,6 +247,10 @@ fun VideoPlayerControls(
     player: Player,
     state: VideoPlayerState,
     focusRequester: FocusRequester,
+    hasNext: Boolean = false,
+    hasPrevious: Boolean = false,
+    onNext: () -> Unit = {},
+    onPrevious: () -> Unit = {},
     // navigator: DestinationsNavigator,
 ) {
     val onPlayPauseToggle = { shouldPlay: Boolean ->
@@ -254,6 +272,10 @@ fun VideoPlayerControls(
                 onSeek = { player.seekTo(player.duration.times(it).toLong()) },
                 contentProgress = contentCurrentPosition.milliseconds,
                 contentDuration = player.duration.milliseconds,
+                hasNext = hasNext,
+                hasPrevious = hasPrevious,
+                onNext = onNext,
+                onPrevious = onPrevious,
             )
         },
         mediaActions = {

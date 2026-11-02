@@ -567,6 +567,52 @@ constructor(
         }
     }
 
+    fun nextEpisode() {
+        if (player.hasNextMediaItem()) {
+            val mediaId = player.currentMediaItem?.mediaId
+            val position = player.currentPosition
+            val duration = player.duration
+            viewModelScope.launch {
+                try {
+                    if (mediaId != null && duration != C.TIME_UNSET) {
+                        repository.postPlaybackStop(
+                            UUID.fromString(mediaId),
+                            position.times(10000),
+                            position.div(duration.toFloat()).times(100).toInt(),
+                        )
+                    }
+                } catch (e: Exception) {
+                    Timber.e(e)
+                }
+            }
+            player.seekToNextMediaItem()
+            player.play()
+        }
+    }
+
+    fun previousEpisode() {
+        if (player.hasPreviousMediaItem()) {
+            val mediaId = player.currentMediaItem?.mediaId
+            val position = player.currentPosition
+            val duration = player.duration
+            viewModelScope.launch {
+                try {
+                    if (mediaId != null && duration != C.TIME_UNSET) {
+                        repository.postPlaybackStop(
+                            UUID.fromString(mediaId),
+                            position.times(10000),
+                            position.div(duration.toFloat()).times(100).toInt(),
+                        )
+                    }
+                } catch (e: Exception) {
+                    Timber.e(e)
+                }
+            }
+            player.seekToPreviousMediaItem()
+            player.play()
+        }
+    }
+
     fun skipSegment(segment: FindroidSegment) {
         if (shouldSkipToNextEpisode(segment)) {
             player.seekToNextMediaItem()
